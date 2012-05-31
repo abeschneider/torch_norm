@@ -1,6 +1,7 @@
 require 'nn'
 
 require 'Norm'
+require 'Normalizer'
 
 local precision = 1e-5
 tester = torch.Tester()
@@ -43,6 +44,14 @@ function mytest.TestCDivTable()
 	
 	local err = nn.Jacobian.testJacobian(seq, input)
 	tester:assertlt(err, precision, 'error on state ')	
+end
+
+function mytest.TestNormalizer()
+	local module = Normalizer()
+	
+	local input = torch.Tensor(10, 1):zero()	
+	local err = nn.Jacobian.testJacobian(module, input)
+	tester:assertlt(err, precision, 'error on state ')
 end
 
 
