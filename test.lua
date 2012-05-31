@@ -24,11 +24,9 @@ function mytest.TestNormSquared()
 	tester:assertlt(err, precision, 'error on state ')
 end
 
-function mytest.TestDivTable()
+function mytest.TestCDivTable()
 	local input = torch.Tensor(10, 1):zero()	
 	
-	-- Can't test DivTable directly because it takes a table input. Therefore, built a network that we
-	-- can test it in (and assume all other components work)
 	local seq = nn.Sequential()
 	local split = nn.ConcatTable()
 	seq:add(split)
