@@ -11,7 +11,6 @@ function mytest.TestNorm()
 
 	local input = torch.Tensor(10, 1):zero()
 	local err = nn.Jacobian.testJacobian(module, input)
-	print(err)
 	tester:assertlt(err, precision, 'error on state ')
 end
 
@@ -20,7 +19,6 @@ function mytest.TestNormSquared()
 
 	local input = torch.Tensor(10, 1):zero()
 	local err = nn.Jacobian.testJacobian(module, input)
-	print(err)
 	tester:assertlt(err, precision, 'error on state ')
 end
 
