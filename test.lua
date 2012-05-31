@@ -33,9 +33,8 @@ function mytest.TestCDivTable()
 	
 	-- [1] vector
 	split:add(nn.Identity())
-	-- [2] normalization factor
 	
-	-- need to replicate normalization so we can do a cdiv
+	-- [2] normalization factor (need to replicate normalization so we can do a cdiv)
 	local nseq = nn.Sequential()
 	nseq:add(Norm())
 	nseq:add(nn.Replicate(input:size(1)))
