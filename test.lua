@@ -44,7 +44,6 @@ function mytest.TestCDivTable()
 	seq:add(nn.CDivTable())		
 	
 	local err = nn.Jacobian.testJacobian(seq, input)
-	print(err)
 	tester:assertlt(err, precision, 'error on state ')	
 end
 
