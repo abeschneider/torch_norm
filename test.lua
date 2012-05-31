@@ -1,5 +1,6 @@
-require 'Norm'
 require 'nn'
+
+require 'Norm'
 
 local precision = 1e-5
 tester = torch.Tester()
@@ -21,6 +22,33 @@ function mytest.TestNormSquared()
 	local err = nn.Jacobian.testJacobian(module, input)
 	print(err)
 	tester:assertlt(err, precision, 'error on state ')
+end
+
+function mytest.TestDivTable()
+	local input = torch.Tensor(10, 1):zero()	
+	
+	-- Can't test DivTable directly because it takes a table input. Therefore, built a network that we
+	-- can test it in (and assume all other components work)
+	local seq = nn.Sequential()
+	local split = nn.ConcatTable()
+	seq:add(split)
+	
+	-- [1] vector
+	split:add(nn.Identity())
+	-- [2] normalization factor
+	
+	-- need to replicate normalization so we can do a cdiv
+	local nseq = nn.Sequential()
+	nseq:add(Norm())
+	nseq:add(nn.Replicate(input:size(1)))
+	split:add(nseq)
+	
+	-- vector / norm(vector)
+	seq:add(nn.CDivTable())		
+	
+	local err = nn.Jacobian.testJacobian(seq, input)
+	print(err)
+	tester:assertlt(err, precision, 'error on state ')	
 end
 
 
